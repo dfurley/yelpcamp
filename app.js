@@ -1,38 +1,19 @@
-var express = require("express");
-var app = express();
-var bodyParser = require("body-parser");
-var mongoose = require("mongoose");
+// Required packages etc.
+var express = require("express"),
+    app = express(),
+    bodyParser = require("body-parser"),
+    mongoose = require("mongoose"),
+    Campground = require("./models/campground"),
+    seedDB = require("./seeds")
 
+// Database set up etc.
 mongoose.connect("mongodb://localhost/yelp_camp");
 app.use(bodyParser.urlencoded({extended:true}));
 app.set("view engine", "ejs");
+seedDB();
 
-// SCHEMA SETUP
-var campgroundSchema = new mongoose.Schema({
-    name: String,
-    image: String,
-    description: String
-});
 
-var Campground = mongoose.model("Campground", campgroundSchema);
-
-// TEMPORARY
-
-// Campground.create(
-//     {
-//         name: "Tunnel Mountain", 
-//         image: "https://images.pexels.com/photos/216676/pexels-photo-216676.jpeg?h=350&auto=compress&cs=tinysrgb",
-//         description: "Sitting above Banff town on tunnel mountain, this campground offers RV hookups, firepits, and running water."
-        
-//     }, function(err, campground) {
-//         if(err) {
-//             console.log(err);
-//         } else {
-//             console.log("NEW CAMPGROUND CREATED: ");
-//             console.log(campground);
-//         }
-//     });
-
+// Landing page
 app.get("/", function(req, res){
     res.render("landing");
 });
@@ -74,7 +55,7 @@ app.post("/campgrounds", function(req, res){
 // SHOW - shows more info about one campground
 app.get("/campgrounds/:id", function(req, res){
    // find campground with given id
-   Campground.findById(req.params.id, function(err, foundCampground){
+   Campground.findById(req.params.id).populate("comments").exec(function(err, foundCampground){
       if(err){
           console.log(err);
       } else {
@@ -84,6 +65,7 @@ app.get("/campgrounds/:id", function(req, res){
    });
 });
 
+// Launch server
 app.listen(process.env.PORT, process.env.IP, function(){
     console.log("The YelpCamp Server Has Started!");
 });
