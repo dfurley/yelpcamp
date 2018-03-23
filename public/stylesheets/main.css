@@ -13,3 +13,8 @@
 .delete-form {
     display: inline;
 }
+
+.sidebar-button {
+    margin-bottom: 9px;
+    width: 100%;
+}
