@@ -7,20 +7,20 @@ var middleware = require("../middleware");
 
 
 // =================
-// COMMENT ROUTES
+// COMMENT ROUTES - new and edit commented out as forms are now displayed directly on the campground.show page
 // =================
 
 // NEW
-router.get("/new", middleware.isLoggedIn, function(req, res){
-   // find campground by id
-   Campground.findById(req.params.id, function(err, campground){
-      if(err){
-          console.log(err);
-      } else {
-          res.render("comments/new", {campground: campground});
-      }
-   });
-});
+// router.get("/new", middleware.isLoggedIn, function(req, res){
+//   // find campground by id
+//   Campground.findById(req.params.id, function(err, campground){
+//       if(err){
+//           console.log(err);
+//       } else {
+//           res.render("comments/new", {campground: campground});
+//       }
+//   });
+// });
 
 // CREATE
 router.post("/", middleware.isLoggedIn, function(req, res){
@@ -54,15 +54,15 @@ router.post("/", middleware.isLoggedIn, function(req, res){
 });
 
 // EDIT
-router.get("/:comment_id/edit", middleware.checkCommentOwnership, function(req, res){
-   Comment.findById(req.params.comment_id, function(err, foundComment){
-      if(err){
-          res.redirect("back");
-      } else {
-          res.render("comments/edit", {campground_id: req.params.id, comment:foundComment});
-      }
-   });
-});
+// router.get("/:comment_id/edit", middleware.checkCommentOwnership, function(req, res){
+//   Comment.findById(req.params.comment_id, function(err, foundComment){
+//       if(err){
+//           res.redirect("back");
+//       } else {
+//           res.render("comments/edit", {campground_id: req.params.id, comment:foundComment});
+//       }
+//   });
+// });
 
 // UPDATE
 router.put("/:comment_id", function(req, res){
