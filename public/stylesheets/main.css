@@ -18,3 +18,9 @@
     margin-bottom: 9px;
     width: 100%;
 }
+
+/* Google Maps */
+#map {
+    height: 400px;
+    width: 100%;
+}
