@@ -68,8 +68,10 @@ router.post("/", middleware.isLoggedIn, function(req, res){
 router.put("/:comment_id", function(req, res){
    Comment.findByIdAndUpdate(req.params.comment_id, req.body.comment, function(err, updateComment){
        if(err){
+           req.flash("error", err.message);
            res.redirect("back");
        } else {
+           req.flash("success","Comment successfully Updated!");
            res.redirect("/campgrounds/" + req.params.id);
        }
    });
@@ -79,6 +81,7 @@ router.put("/:comment_id", function(req, res){
 router.delete("/:comment_id", middleware.checkCommentOwnership, function(req, res){
     Comment.findByIdAndRemove(req.params.comment_id, function(err){
        if(err){
+           req.flash("error", err.message);
            res.redirect("back");
        } else {
            req.flash("success", "Comment successfully deleted.");

@@ -26,6 +26,10 @@ router.get("/register", function(req, res){
 router.post("/register", function(req, res){
     // create new user and save to newUser variable
     var newUser = new User({username: req.body.username});
+    // check if admin code is correct, if true, make new user an admin
+    if(req.body.adminCode === '5555') {
+        newUser.isAdmin = true;
+    }
     // pass newUser and password to passport, if error redirect back to register, else save user to db and redirect to campgrounds page
     User.register(newUser, req.body.password, function(err, user){
        if(err){

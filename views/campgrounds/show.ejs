@@ -41,7 +41,7 @@
                     <p>
                         <em>Submitted by <%=campground.author.username%>, <%=moment(campground.createdAt).fromNow()%></em>
                     </p>
-                    <% if(currentUser && campground.author.id.equals(currentUser._id)) { %>
+                    <% if(currentUser && campground.author.id.equals(currentUser._id) || currentUser && currentUser.isAdmin) { %>
                         <a class="btn btn-warning" href="/campgrounds/<%= campground._id %>/edit"><i class="fas fa-edit"></i> Edit</a>
                         <form class="delete-form" action="/campgrounds/<%=campground._id %>?_method=DELETE" method="post">
                             <button class="btn btn-danger"><i class="fas fa-trash-alt"></i> Delete</button>
@@ -117,7 +117,7 @@
                                 <%= comment.text %>
                             </p>
                             <!--if current user is the owner of the comment, show the edit and delete buttons-->
-                            <% if(currentUser && comment.author.id.equals(currentUser._id)) { %>
+                            <% if(currentUser && comment.author.id.equals(currentUser._id) || currentUser && currentUser.isAdmin) { %>
                                 <!--Edit button used for collapsing the edit comment form-->
                                 <a class="btn btn-xs btn-warning" data-toggle="collapse" href="#collapseEdit<%= comment._id %>" aria-expanded="false" aria-controls="collapse<%=comment._id%>">Edit</a>
                                 <!--Delete comment button-->
