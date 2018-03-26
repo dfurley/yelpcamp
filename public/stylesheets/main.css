@@ -19,6 +19,15 @@
     width: 100%;
 }
 
+.profile-button {
+    width: 49%;
+    margin-bottom: 15px;
+}
+
+.center {
+    text-align: center;
+}
+
 /* Google Maps */
 #map {
     height: 400px;

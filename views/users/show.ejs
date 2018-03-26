@@ -9,6 +9,10 @@
                 <img src="<%= user.avatar %>" alt="user profile image">
                 <div class="caption"><a href="mailto:<%= user.email %>"><%= user.email %></a></div>
             </div>
+            <% if(currentUser && user._id.equals(currentUser._id) || currentUser && currentUser.isAdmin) { %>
+                <a class="btn btn-warning profile-button" href="/users/<%= user._id %>/edit"><i class="fas fa-edit"></i> Edit Profile</a>
+                <a class="btn btn-danger profile-button" href="/users/<%= user._id %>/delete"><i class="fas fa-trash-alt"></i> Delete Profile</a>
+            <% } %>
         </div>
         <div class="col-md-8">
             <br>
