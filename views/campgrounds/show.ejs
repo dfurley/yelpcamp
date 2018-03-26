@@ -39,7 +39,7 @@
                         <%=campground.description%> 
                     </p>
                     <p>
-                        <em>Submitted by <%=campground.author.username%>, <%=moment(campground.createdAt).fromNow()%></em>
+                        <em>Submitted by <a href="/users/<%=campground.author.id%>"><%=campground.author.username%></a>, <%=moment(campground.createdAt).fromNow()%></em>
                     </p>
                     <% if(currentUser && campground.author.id.equals(currentUser._id) || currentUser && currentUser.isAdmin) { %>
                         <a class="btn btn-warning" href="/campgrounds/<%= campground._id %>/edit"><i class="fas fa-edit"></i> Edit</a>
@@ -107,7 +107,7 @@
                                 <% } %>
                                 
                                 <!--Print the authors username-->
-                                <%= comment.author.username %>
+                                <a href="/users/<%=comment.author.id%>"><%=comment.author.username%></a>
                             </strong>
                             
                             <!--Show when the comment was made-->
