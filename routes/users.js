@@ -87,17 +87,35 @@ router.get("/users/:id/delete", middleware.checkCurrentUser, function(req, res){
     });
 });
 
-// delete user - DESTROY
+// delete user - DESTROY - also deletes all of a users campgrounds and comments
 router.delete("/users/:id", middleware.checkCurrentUser, function(req, res){
-   User.findByIdAndRemove(req.params.id, function(err){
-      if(err){
-          req.flash("error", err.message);
-          res.redirect("/campgrounds");
-      } else {
-          req.flash("success", "Sad to see you go.");
-          res.redirect("/campgrounds");
-      }
-   });
+    User.findById(req.params.id, function(err, foundUser){
+        if(err){
+            req.flash("error", "Something went wrong");
+            res.redirect("/campgrounds");
+        }
+        Campground.remove().where('author.id').equals(foundUser._id).exec(function(err, campgrounds){
+          if(err){
+              req.flash("error", "Something went wrong");
+              res.redirect("/campgrounds");
+          }
+        });
+        Comment.remove().where('author.id').equals(foundUser._id).exec(function(err, comments){
+          if(err){
+              req.flash("error", "Something went wrong");
+              res.redirect("/campgrounds");
+          }
+        });
+    });
+    User.findByIdAndRemove(req.params.id, function(err){
+        if(err){
+            req.flash("error", err.message);
+            res.redirect("/campgrounds");
+        } else {
+            req.flash("success", "Sad to see you go.");
+            res.redirect("/campgrounds");
+        }
+    });
 });
 
 module.exports = router;
