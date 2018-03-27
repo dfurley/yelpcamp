@@ -83,7 +83,7 @@ router.post('/forgot', function(req, res, next) {
         service: 'Gmail', 
         auth: {
           user: 'yelpcamp123@gmail.com',
-          pass: '9K$3bz?pnm%pZ++w'
+          pass: process.env.GMAILPW
         }
       });
       var mailOptions = {
@@ -149,7 +149,7 @@ router.post('/reset/:token', function(req, res) {
         service: 'Gmail', 
         auth: {
           user: 'yelpcamp123@gmail.com',
-          pass: '9K$3bz?pnm%pZ++w'
+          pass: process.env.GMAILPW
         }
       });
       var mailOptions = {
