@@ -15,14 +15,34 @@ var geocoder = NodeGeocoder(options);
 
 //INDEX - show all campgrounds
 router.get("/", function(req, res){
-    // Get all campgrounds from DB
-    Campground.find({}, function(err, allCampgrounds){
-       if(err){
-           console.log(err);
-       } else {
-          res.render("campgrounds/index",{campgrounds:allCampgrounds, page: 'campgrounds'});
-       }
-    });
+    var noMatch = null;
+    var search = req.query.search;
+    // if a query exists, search for matches to query
+    if(search) {
+        // convert the query search into a regular expression
+        const regex = new RegExp(escapeRegex(search), 'gi');
+        // Find matching campgrounds from DB
+        Campground.find({name: regex}, function(err, allCampgrounds){
+            if(err){
+               console.log(err);
+           } else {
+              if(allCampgrounds.length === 0) {
+                  noMatch = "No campgrounds match that search."
+              }
+              res.render("campgrounds/index",{campgrounds:allCampgrounds, noMatch:noMatch, search:search, page: 'campgrounds'});
+           } 
+        });
+    } else {
+        search = null;
+        // Else, get all campgrounds from DB
+        Campground.find({}, function(err, allCampgrounds){
+           if(err){
+               console.log(err);
+           } else {
+              res.render("campgrounds/index",{campgrounds:allCampgrounds, noMatch:noMatch, search:search, page: 'campgrounds'});
+           } 
+        });
+    }
 });
 
 //CREATE - add new campground to DB
@@ -139,5 +159,8 @@ router.delete("/:id", middleware.checkCampgroundOwnership, function(req, res){
    });
 });
 
+function escapeRegex(text) {
+    return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
+};
 
 module.exports = router;
