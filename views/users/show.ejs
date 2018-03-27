@@ -20,7 +20,7 @@
             <h3><%= user.firstName + "'s" %> campgrounds:</h3>
             <div class="row text-center" style="display:flex; flex-wrap:wrap;">
                 <% campgrounds.forEach(function(campground){ %>
-                    <div class="col-md-6 col-sm-6">
+                    <div class="col-md-6 col-sm-12">
                         <div class="thumbnail">
                             <img src="<%= campground.image %>">
                             <div class="caption">
