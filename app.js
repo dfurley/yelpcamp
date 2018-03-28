@@ -22,9 +22,7 @@ var commentsRoutes   = require("./routes/comments"),
     userRoutes       = require("./routes/users");
 
 // Database set up etc.
-var url = process.env.DATABASEURL;
-// "mongodb://david:winston355@ds111319.mlab.com:11319/yelpcamp123"; 
-// || "mongodb://localhost/yelp_camp";
+var url = process.env.DATABASEURL || "mongodb://localhost/yelp_camp";
 mongoose.connect(url);
 
 app.use(bodyParser.urlencoded({extended:true}));
