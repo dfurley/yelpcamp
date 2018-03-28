@@ -19,11 +19,12 @@ require('dotenv').load();
 var commentsRoutes   = require("./routes/comments"),
     campgroundRoutes = require("./routes/campgrounds"),
     indexRoutes      = require("./routes/index"),
-    userRoutes       = require("./routes/users")
+    userRoutes       = require("./routes/users");
 
 // Database set up etc.
-var url = "mongodb://david:winston355@ds111319.mlab.com:11319/yelpcamp123"; 
-// || process.env.DEV_DATABASEURL;
+var url = process.env.DATABASEURL;
+// "mongodb://david:winston355@ds111319.mlab.com:11319/yelpcamp123"; 
+// || "mongodb://localhost/yelp_camp";
 mongoose.connect(url);
 
 app.use(bodyParser.urlencoded({extended:true}));
